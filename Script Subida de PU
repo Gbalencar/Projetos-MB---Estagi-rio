@@ -1,0 +1,31 @@
+# Projetos-MB---Estagi-rio
+const ss = SpreadsheetApp.getActiveSpreadsheet();
+const sheet1 = ss.getSheetByName("Token");
+const sheet2 = ss.getSheetByName("Página1");
+
+const ssId = "1L5s2lFV4Y5nDREFGu21TZi7DI9la1W10yOfbqd4R9rA"
+const ssBase = SpreadsheetApp.openById(ssId);
+const sheetBase = ssBase.getSheetByName("Original");
+
+
+function copiareColarOutraAba(){
+
+  let validacao = sheetBase.getRange("A1").getValue();
+
+  if(validacao == ""){
+
+    var rowInicio = 1;
+    var lastRow = 1;
+
+  }else{
+
+    var rowInicio = 84; // GetRange(liha de inicio)
+    var lastRow = sheetBase.getRange("A1").getNextDataCell(SpreadsheetApp.Direction.DOWN).getRow() + 1;
+
+  }
+  
+  let area = sheet1.getRange("B" + rowInicio + ":E151").getValues();
+  sheetBase.getRange("A" + lastRow  + ":D" + (lastRow + area.length - 1)).setValues(area);
+
+  sheetBase.getRange("A1").activate();
+}
