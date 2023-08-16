@@ -1,0 +1,49 @@
+const ss = SpreadsheetApp.getActiveSpreadsheet();
+const sheet1 = ss.getSheetByName("Página1");
+
+function onEdit(){
+
+  var guiaAtiva = SpreadsheetApp.getActive().getSheetName();
+
+  if (guiaAtiva == "Página1"){
+    
+    var sheet1 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Página1");
+
+    var linha = sheet1.getActiveCell().getRow();
+    var coluna = sheet1.getActiveCell().getColumn();
+
+    if(coluna == 1 && linha >0){
+      vp();
+    }
+  }
+}
+
+function vp(){
+
+  //let valorPresente = sheet1.getRange("E2").getFormula();
+
+  //sheet1.getRange("E3").setFormula(valorPresente);
+
+  var linha = sheet1.getActiveCell().getRow();
+
+  var selection = sheet1.getSelection().getActiveRange().getA1Notation();
+
+  var dados = sheet1.getRange(selection).getValues();
+
+  for (var i = 0; i < dados.length; i++){
+
+    if(dados[i][0] != ""){
+      var vp1 = "=PV(D" + linha + ";(B"+linha+"-A"+linha+")/30;;-C"+linha+")";
+
+      sheet1.getRange(linha,6).setFormula(vp1);
+    }
+    else{
+        null
+      }
+
+  var linha = linha + 1;
+
+
+  }
+  dados.length = 0;
+}
